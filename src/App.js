@@ -5,8 +5,14 @@ import {
 } from "react-router-dom";
 import Signup from './Components/Auth/signup';
 import Login from './Components/Auth/login';
+import Dashboard from './Components/pages/dashboard';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Visa from './Components/pages/visa';
+import University from './Components/pages/university';
+import Course from './Components/pages/course';
+import Profile from './Components/pages/profile';
+import NavBar from './Components/General/NavBar';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +22,26 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup></Signup>
+  },
+  {
+    path: "/university",
+    element: <University></University>
+  },
+  {
+    path: "/course",
+    element: <Course></Course>
+  },
+  {
+    path: "/visa",
+    element: <Visa></Visa>
+  },
+  {
+    path: "/profile",
+    element: <Profile></Profile>
+  },
+  {
+    path: "/",
+    element: <Dashboard></Dashboard>
   },
 ]);
 
