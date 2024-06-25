@@ -13,6 +13,7 @@ import University from './Components/pages/university';
 import Course from './Components/pages/course';
 import Profile from './Components/pages/profile';
 import NavBar from './Components/General/NavBar';
+import APS from './Components/pages/APS';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/visa",
     element: <Visa></Visa>
+  },
+  {
+    path: "/aps",
+    element: <APS></APS>
   },
   {
     path: "/profile",
