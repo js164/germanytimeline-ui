@@ -71,13 +71,7 @@ axios.interceptors.response.use(function (config, error) {
   return config;
 }, error => {
   if (error.response && error.response.status === 401) {
-    let url;
-    if(localStorage.getItem('isAdmin')==='true'){
-      url='/adminAuth/refresh'
-    }else{
-      url='/auth/refresh'
-    }
-    return axios.post(url, { 'refresh_token': localStorage.getItem('refresh_token') }).then(response => {
+    return axios.post('/auth/refresh', { 'refresh_token': localStorage.getItem('refresh_token') }).then(response => {
       if (response.data && response.data.success) {
         localStorage.setItem('access_token', response.data.user.access_token);
 

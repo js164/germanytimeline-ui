@@ -23,7 +23,8 @@ export default function Login() {
             localStorage.setItem('username', response.data.user.username);
             localStorage.setItem('access_token', response.data.user.access_token);
             localStorage.setItem('refresh_token', response.data.user.refresh_token);
-            navigate('/dashboard', { replace: true })
+            localStorage.setItem('userId', response.data.user.userId);
+            navigate('/', { replace: true })
             // this.props.dispatch(setAlertShow('success','Congratulations!',response.data.message))
         }else{
             // this.props.dispatch(setAlertShow('danger','Sorry!',response.data.message))

@@ -7,10 +7,13 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
+import list from "../../assets/listofuniversity"
 
 export default function MyUniversity(props) {
     const [selectedUniversity, setSelectedUniversity] = useState("")
     const [typedUniversity, setTypeddUniversity] = useState("")
+    const [courseName, setCourseName] = useState("")
     const [applicationDate, setApplicationDate] = useState("")
     const [examDate, setExamDate] = useState("")
     const [interviewDate, setInterviewDate] = useState("")
@@ -26,9 +29,36 @@ export default function MyUniversity(props) {
         { name: 'No', value: 'No' },
     ];
     const [enrollStatus, setenrollStatus] = useState('');
-
+    
 
     const addNewUniversity = () => {
+
+        let data = {
+            user: "Jay",
+            universityName: selectedUniversity,
+            courseName: courseName,
+            applicationDate: applicationDate,
+            examDate: examDate,
+            interviewDate: interviewDate,
+            resultDate: resultDate,
+            result: resultValue,
+            yourResponse: enrollStatus,
+        }
+
+        if (selectedUniversity === "Other") {
+            data['universityName'] = typedUniversity
+        }
+        axios.post('/university/addUniversity', data).then(response => {
+            console.log(response);
+            if (response.data.success) {
+                clearData()
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const clearData = () => {
 
     }
 
@@ -36,29 +66,32 @@ export default function MyUniversity(props) {
 
     }
 
-    
+
 
     const deleteUniversityCard = () => {
 
     }
 
+    
+
     return (
         <>
             <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered show={props.universityShow} onHide={props.universityClose}>
+                aria-labelledby="contained-modal-title-vcenter"
+                centered show={props.universityShow} onHide={props.universityClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add university</Modal.Title>
                 </Modal.Header>
+
                 <Card className='m-2 p-4'>
                     <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label column sm="2">University</Form.Label>
+                        <Form.Label column sm="2">University:</Form.Label>
                         <Col sm="10">
                             <Form.Control as="select" onChange={e => setSelectedUniversity(e.target.value)} required aria-label="Default select example">
                                 <option>Choose University</option>
-                                <option value="Technical University of Munich">Technical University of Munich</option>
-                                <option value="RWTH Aachen University">RWTH Aachen University</option>
-                                <option value="University of Göttingen">University of Göttingen</option>
+                                {list.map((uni, idx) => (
+                                    <option key={idx} value={uni}>{uni}</option>
+                                ))}
                                 <option value="Other">Other</option>
                             </Form.Control>
                         </Col>
@@ -73,6 +106,14 @@ export default function MyUniversity(props) {
                             </Col>
                         </Form.Group>
                     }
+                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                        <Form.Label column sm="2">
+                            Course name:
+                        </Form.Label>
+                        <Col sm="10">
+                            <Form.Control type='text' value={courseName} onChange={e => setCourseName(e.target.value)} placeholder='Enter Course name....' />
+                        </Col>
+                    </Form.Group>
                     <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Form.Label column sm="2">
                             Application date:
