@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -9,8 +9,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import list from "../../assets/listofuniversity"
+import { useDispatch } from 'react-redux';
+import { setAlertShow } from '../../ReduxStore/Action';
 
 export default function MyUniversity(props) {
+    const dispatch = useDispatch()
     const [selectedUniversity, setSelectedUniversity] = useState("")
     const [typedUniversity, setTypeddUniversity] = useState("")
     const [courseName, setCourseName] = useState("")
@@ -34,7 +37,6 @@ export default function MyUniversity(props) {
     const addNewUniversity = () => {
 
         let data = {
-            user: "Jay",
             universityName: selectedUniversity,
             courseName: courseName,
             applicationDate: applicationDate,
@@ -52,25 +54,27 @@ export default function MyUniversity(props) {
             console.log(response);
             if (response.data.success) {
                 clearData()
+                dispatch(setAlertShow('success', 'Congratulations!', response.data.message))
+                props.universityClose()
             }
+
         }).catch(err => {
             console.log(err);
         })
     }
 
     const clearData = () => {
-
+        setSelectedUniversity("")
+        setTypeddUniversity("")
+        setCourseName("")
+        setApplicationDate("")
+        setExamDate("")
+        setInterviewDate("")
+        setResultDate("")
+        setResultValue("")
+        setenrollStatus("")
     }
 
-    const deleteUniversity = () => {
-
-    }
-
-
-
-    const deleteUniversityCard = () => {
-
-    }
 
     
 
@@ -80,7 +84,7 @@ export default function MyUniversity(props) {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered show={props.universityShow} onHide={props.universityClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add university</Modal.Title>
+                    <Modal.Title>{props.modifyPurpose} university - {props.uni}</Modal.Title>
                 </Modal.Header>
 
                 <Card className='m-2 p-4'>
@@ -199,7 +203,7 @@ export default function MyUniversity(props) {
                         <Button className='m-2' variant="primary" type="submit" onClick={addNewUniversity}>
                             Save
                         </Button>
-                        <Button className='m-2' variant="danger" type="submit" onClick={deleteUniversityCard}>
+                        <Button className='m-2' variant="danger" type="submit" onClick={props.universityClose}>
                             Delete
                         </Button>
                     </Modal.Footer>

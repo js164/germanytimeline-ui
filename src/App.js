@@ -14,15 +14,17 @@ import Course from './Components/pages/course';
 import Profile from './Components/pages/profile';
 import NavBar from './Components/General/NavBar';
 import APS from './Components/pages/APS';
+import AlertBar from './Components/General/Alert';
+import { ProtectedRoute, UnProtectedRoute } from './protectedRoute';
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Login></Login>
+    element: <UnProtectedRoute><Login></Login></UnProtectedRoute>
   },
   {
     path: "/signup",
-    element: <Signup></Signup>
+    element: <UnProtectedRoute><Signup></Signup></UnProtectedRoute>
   },
   {
     path: "/university",
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Profile></Profile>
+    element: <ProtectedRoute><Profile></Profile></ProtectedRoute>
   },
   {
     path: "/",
@@ -53,6 +55,7 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <React.StrictMode>
+      <AlertBar />
     <RouterProvider router={router} />
   </React.StrictMode>
   )

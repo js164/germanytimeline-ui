@@ -3,12 +3,16 @@ import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import NavBar from '../General/NavBar';
+import { useDispatch } from 'react-redux';
+import { setAlertShow, setAuth } from '../../ReduxStore/Action';
 
 
 export default function Signup(props) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const SignupUser = (e) => {
         e.preventDefault();
@@ -24,12 +28,15 @@ export default function Signup(props) {
                 localStorage.setItem('username', response.data.user.username);
                 localStorage.setItem('access_token', response.data.user.access_token);
                 localStorage.setItem('refresh_token', response.data.user.refresh_token);
+                localStorage.setItem('userId', response.data.user.userId);
+                dispatch(setAuth())
+                dispatch(setAlertShow('success','Congratulations!',response.data.message))
                 navigate('/', { replace: true })
             } else {
-                // this.props.dispatch(setAlertShow('danger','Sorry!',response.data.message))
+                dispatch(setAlertShow('danger','Sorry!',response.data.message))
             }
         }).catch(err => {
-            // this.props.dispatch(setAlertShow('success','Sorry!',err.message))
+            dispatch(setAlertShow('danger','Sorry!',err.message))
             console.log(err);
         })
     };
@@ -37,6 +44,8 @@ export default function Signup(props) {
 
 
     return (
+        <>
+        <NavBar />
         <div className='container'>
             <h2 className='text-center'>SignUp</h2>
             <Form onSubmit={SignupUser}>
@@ -55,5 +64,6 @@ export default function Signup(props) {
                 <Link to="/login" className='m-2'>Alredy have account?</Link>
             </Form>
         </div>
+        </>
     )
 }
