@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   createBrowserRouter,
+  Outlet,
   RouterProvider,
 } from "react-router-dom";
 import Signup from './Components/Auth/signup';
@@ -12,45 +13,60 @@ import Visa from './Components/pages/visa';
 import University from './Components/pages/university';
 import Course from './Components/pages/course';
 import Profile from './Components/pages/profile';
-import NavBar from './Components/General/NavBar';
 import APS from './Components/pages/APS';
 import AlertBar from './Components/General/Alert';
 import { ProtectedRoute, UnProtectedRoute } from './protectedRoute';
+import RootPage from './Components/pages/RootPage';
 
 const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <UnProtectedRoute><Login></Login></UnProtectedRoute>
-  },
-  {
-    path: "/signup",
-    element: <UnProtectedRoute><Signup></Signup></UnProtectedRoute>
-  },
-  {
-    path: "/university",
-    element: <University></University>
-  },
-  {
-    path: "/course",
-    element: <Course></Course>
-  },
-  {
-    path: "/visa",
-    element: <Visa></Visa>
-  },
-  {
-    path: "/aps",
-    element: <APS></APS>
-  },
-  {
-    path: "/profile",
-    element: <ProtectedRoute><Profile></Profile></ProtectedRoute>
-  },
-  {
     path: "/",
-    element: <Dashboard></Dashboard>
-  },
+    element: <NavbarWrapper />,
+    children: [
+      {
+        path: "/login",
+        element: <UnProtectedRoute><Login></Login></UnProtectedRoute>
+      },
+      {
+        path: "/signup",
+        element: <UnProtectedRoute><Signup></Signup></UnProtectedRoute>
+      },
+      {
+        path: "/university",
+        element: <University></University>
+      },
+      {
+        path: "/course",
+        element: <Course></Course>
+      },
+      {
+        path: "/visa",
+        element: <Visa></Visa>
+      },
+      {
+        path: "/aps",
+        element: <APS></APS>
+      },
+      {
+        path: "/profile",
+        element: <ProtectedRoute><Profile></Profile></ProtectedRoute>
+      },
+      {
+        path: "/",
+        element: <Dashboard></Dashboard>
+      },
+    ]
+  }
 ]);
+
+function NavbarWrapper(){
+  return (
+  <div>
+      <RootPage/>
+      <Outlet/>
+  </div>
+  )
+};
 
 export default function App() {
   return (

@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import NavBar from '../General/NavBar';
 import { useDispatch } from 'react-redux';
 import { setAlertShow, setAuth } from '../../ReduxStore/Action';
 
@@ -43,7 +42,6 @@ export default function Login() {
 
   return (
     <>
-    <NavBar />
       <div className='container'>
                 <h2 className='text-center'>Login</h2>
                 <Form onSubmit={LogIn}>

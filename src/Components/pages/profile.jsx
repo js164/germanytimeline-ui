@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import NavBar from '../General/NavBar'
 import Container from 'react-bootstrap/esm/Container'
 import Button from 'react-bootstrap/Button';
 import MyUniversity from '../blocks/myUniversity';
@@ -10,6 +9,7 @@ import Col from 'react-bootstrap/esm/Col';
 import Moment from 'react-moment';
 import { setAlertShow } from '../../ReduxStore/Action';
 import { useDispatch } from 'react-redux';
+import UpdateUniversity from '../blocks/updateUniversity';
 
 export default function Profile(props) {
     const dispatch = useDispatch()
@@ -23,7 +23,6 @@ export default function Profile(props) {
     }
     const addUniversityShow = () => setUniversityShow(true);
     const [myUniversityList, setmyUniversityList] = useState([]);
-    const [modifyPurpose, setModifyPurpose] = useState("Add");
     const [uni, setUni] = useState([])
 
 
@@ -54,18 +53,19 @@ export default function Profile(props) {
         })
     }
 
-    const updateUniversity = () =>{
+    const updateUniversity = (uni) =>{
         setUpdateUniversityShow(true)
+        setUni(uni)
     }
 
     const updateUniversityClose = () =>{
         setUpdateUniversityShow(false);
+        setUni([])
         getMyUniversityList();
     }
 
     return (
         <>
-            <NavBar />
             <Container>
                 <br />
                 <h1>Welcome {localStorage.username}</h1>
@@ -77,7 +77,8 @@ export default function Profile(props) {
                         <Button className='m-2' variant="primary" type="submit" onClick={addUniversityShow}>
                             + Add University
                         </Button>
-                        <MyUniversity modifyPurpose="Add" uni={[]} universityShow={universityShow} universityClose={universityClose}></MyUniversity>
+                        <MyUniversity universityShow={universityShow} universityClose={universityClose}></MyUniversity>
+                        <UpdateUniversity uni={uni} updateUniversityShow={updateUniversityShow} updateUniversityClose={updateUniversityClose}></UpdateUniversity>
                         <Accordion defaultActiveKey="0" >
                             {myUniversityList && myUniversityList.map((uni, idx) =>
                                 <Accordion.Item eventKey={idx} key={idx}>
@@ -136,7 +137,7 @@ export default function Profile(props) {
                                                 <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                                             </svg></button>
                                         </Col>
-                                        <MyUniversity modifyPurpose="Update" uni={uni} universityShow={updateUniversityShow} universityClose={updateUniversityClose}></MyUniversity>
+                                        
                                     </Accordion.Body>
                                 </Accordion.Item>
                             )}
