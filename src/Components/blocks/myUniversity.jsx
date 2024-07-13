@@ -191,7 +191,7 @@ export default function MyUniversity(props) {
                             </Col>
                         </Form.Group>
                     }
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                    {resultValue != "No Response" && <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Form.Label column sm="2">
                             Acceptence/Rejection date:
                         </Form.Label>
@@ -199,6 +199,7 @@ export default function MyUniversity(props) {
                             <Form.Control type="date" value={resultDate} onChange={e => setResultDate(e.target.value)} />
                         </Col>
                     </Form.Group>
+                    }
                     <Modal.Footer>
                         <Button className='m-2' variant="primary" type="submit" onClick={addNewUniversity}>
                             Save

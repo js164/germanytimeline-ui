@@ -30,11 +30,12 @@ export default function UpdateUniversity(props) {
         { name: 'No', value: 'No' },
     ];
     const [enrollStatus, setenrollStatus] = useState('');
-    
+    const [uniId, setUniId] = useState('');
 
     const updateUniversity = () => {
 
         let data = {
+            universityName : universityName,
             courseName: courseName,
             applicationDate: applicationDate,
             examDate: examDate,
@@ -44,12 +45,12 @@ export default function UpdateUniversity(props) {
             yourResponse: enrollStatus,
         }
 
-        axios.post('/university/updateUniversity', data).then(response => {
+        axios.post('/university/updateUniversity/' + uniId, data).then(response => {
             console.log(response);
             if (response.data.success) {
                 clearData()
                 dispatch(setAlertShow('success', 'Congratulations!', response.data.message))
-                props.universityClose()
+                props.updateUniversityClose()
             }
 
         }).catch(err => {
@@ -66,6 +67,7 @@ export default function UpdateUniversity(props) {
         setResultDate("")
         setResultValue("")
         setenrollStatus("")
+        setUniId("")
     }
 
     const dateConvert= (d) =>{
@@ -85,6 +87,7 @@ export default function UpdateUniversity(props) {
             setResultDate(props.uni.resultDate)
             setResultValue(props.uni.result)
             setenrollStatus(props.uni.yourResponse)
+            setUniId(props.uni._id)
         }
     },[props.uni])
 
@@ -189,7 +192,7 @@ export default function UpdateUniversity(props) {
                             </Col>
                         </Form.Group>
                     }
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                    {resultValue != "No Response" && <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Form.Label column sm="2">
                             Acceptence/Rejection date:
                         </Form.Label>
@@ -197,6 +200,7 @@ export default function UpdateUniversity(props) {
                             <Form.Control type="date" value={resultDate ? dateConvert(resultDate) : ""} onChange={e => setResultDate(e.target.value)} />
                         </Col>
                     </Form.Group>
+                    }
                     <Modal.Footer>
                         <Button className='m-2' variant="primary" type="submit" onClick={updateUniversity}>
                             Save
