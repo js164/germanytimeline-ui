@@ -98,11 +98,23 @@ axios.interceptors.response.use(function (config, error) {
         return axios.request(error.response.config);
       } else {
         //redirect to login page
+        console.log("redirect");
+        
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        localStorage.removeItem('username')
+        localStorage.removeItem('userId')
+        window.location.reload();
       }
     }).catch(error => {
       //redirect to login page
       console.log(error);
-      return error;
+        
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        localStorage.removeItem('username')
+        localStorage.removeItem('userId')
+        window.location.reload();
     })
   }
 });
