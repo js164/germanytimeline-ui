@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import UpdateUniversity from '../blocks/updateUniversity';
 import Modal from 'react-bootstrap/Modal';
 import APS from '../blocks/APS';
+import Visa from '../blocks/visa';
 
 export default function Profile(props) {
     const dispatch = useDispatch()
@@ -183,6 +184,13 @@ export default function Profile(props) {
                     <div className='APSclass'>
                         <h1 className="text-info">APS</h1>
                         <APS />
+                    </div>
+                    <br />
+                    <hr />
+
+                    <div className='VisaTimeline'>
+                        <h1 className="text-info">Visa</h1>
+                        <Visa />
                     </div>
 
                 </div>
