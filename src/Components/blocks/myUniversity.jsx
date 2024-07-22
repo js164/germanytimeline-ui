@@ -201,10 +201,10 @@ export default function MyUniversity(props) {
                     </Form.Group>
                     }
                     <Modal.Footer>
-                        <Button className='m-2' variant="primary" type="submit" onClick={addNewUniversity}>
+                        <Button className='m-2' variant="primary" onClick={addNewUniversity}>
                             Save
                         </Button>
-                        <Button className='m-2' variant="danger" type="submit" onClick={props.universityClose}>
+                        <Button className='m-2' variant="danger" onClick={props.universityClose}>
                             Cancel
                         </Button>
                     </Modal.Footer>

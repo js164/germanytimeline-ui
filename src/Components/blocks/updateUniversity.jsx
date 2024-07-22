@@ -202,10 +202,10 @@ export default function UpdateUniversity(props) {
                     </Form.Group>
                     }
                     <Modal.Footer>
-                        <Button className='m-2' variant="primary" type="submit" onClick={updateUniversity}>
+                        <Button className='m-2' variant="primary" onClick={updateUniversity}>
                             Save
                         </Button>
-                        <Button className='m-2' variant="danger" type="submit" onClick={props.universityClose}>
+                        <Button className='m-2' variant="danger" onClick={props.universityClose}>
                             Cancel
                         </Button>
                     </Modal.Footer>
