@@ -11,14 +11,16 @@ export default function APS() {
     const [appliedDate, setAppliedDate] = useState('')
     const [receivedDate, setReceivedDate] = useState('')
     const [additionalInfo, setAdditionalInfo] = useState('')
+    const [editMode, setEditMode] = useState(true)
     const dispatch = useDispatch()
 
     const saveAPS = () => {
-        const data = {appliedDate, receivedDate, additionalInfo}
+        const data = { appliedDate, receivedDate, additionalInfo }
         axios.post('/APS/save', data).then(response => {
             console.log(response);
             if (response.data.success) {
                 dispatch(setAlertShow('success', 'Congratulations!', response.data.message))
+                setEditMode(false)
             }
 
         }).catch(err => {
@@ -29,17 +31,21 @@ export default function APS() {
     useEffect(() => {
         axios.get('/APS/').then(response => {
             console.log(response);
-            if(response.data.success && response.data.data){
+            if (response.data.success && response.data.data) {
                 setAppliedDate(response.data.data.appliedDate)
                 setReceivedDate(response.data.data.receivedDate)
                 setAdditionalInfo(response.data.data.additionalInfo)
+                setEditMode(false)
+            }
+            else {
+                setEditMode(true)
             }
         })
     }, [])
 
-    const dateConvert= (d) =>{
-        if(d){
-            return d.slice(0,10);
+    const dateConvert = (d) => {
+        if (d) {
+            return d.slice(0, 10);
         }
         return ''
     }
@@ -52,7 +58,7 @@ export default function APS() {
                         APS applied on:
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Control type="date" value={appliedDate ? dateConvert(appliedDate) : ""} onChange={e => setAppliedDate(e.target.value)} />
+                        <Form.Control disabled={!editMode} type="date" value={appliedDate ? dateConvert(appliedDate) : ""} onChange={e => setAppliedDate(e.target.value)} />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
@@ -60,18 +66,21 @@ export default function APS() {
                         APS received on:
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Control type="date" value={receivedDate ? dateConvert(receivedDate) : "" } onChange={e => setReceivedDate(e.target.value)} />
+                        <Form.Control disabled={!editMode} type="date" value={receivedDate ? dateConvert(receivedDate) : ""} onChange={e => setReceivedDate(e.target.value)} />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label column sm="2">Additional Information:</Form.Label>
                     <Col sm="10">
-                    <Form.Control as="textarea" rows={3} value={additionalInfo} onChange={e => setAdditionalInfo(e.target.value)} placeholder="Enter any additional deatils realted to your APS process..." />
+                        <Form.Control disabled={!editMode} as="textarea" rows={3} value={additionalInfo} onChange={e => setAdditionalInfo(e.target.value)} placeholder="Enter any additional deatils realted to your APS process..." />
                     </Col>
                 </Form.Group>
 
-                <Button variant="primary" onClick={saveAPS}>
+                <Button variant="primary" onClick={saveAPS} disabled={!editMode}>
                     Save
+                </Button>
+                <Button className='m-2' disabled={editMode} onClick={()=>setEditMode(true)}>
+                    Edit
                 </Button>
             </Form>
         </>

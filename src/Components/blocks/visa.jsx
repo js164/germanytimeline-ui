@@ -15,6 +15,7 @@ export default function Visa() {
     const [additionalInfo, setAdditionalInfo] = useState('')
     const [resultValue, setResultValue] = useState('')
     const [VFSlocation, setVFSlocation] = useState('')
+    const [editMode, setEditMode] = useState(true)
     const dispatch = useDispatch()
 
     const VFS = [
@@ -32,6 +33,7 @@ export default function Visa() {
             console.log(response);
             if (response.data.success) {
                 dispatch(setAlertShow('success', 'Congratulations!', response.data.message))
+                setEditMode(false)
             }
 
         }).catch(err => {
@@ -48,6 +50,9 @@ export default function Visa() {
                 setAdditionalInfo(response.data.data.additionalInfo)
                 setResultValue(response.data.data.resultValue)
                 setVFSlocation(response.data.data.VFSlocation)
+                setEditMode(false)
+            }else{
+                setEditMode(true)
             }
         })
     }, [])
@@ -67,7 +72,7 @@ export default function Visa() {
                         Visa applointment date:
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Control type="date" value={appliedDate ? dateConvert(appliedDate) : ""} onChange={e => setAppliedDate(e.target.value)} />
+                        <Form.Control disabled={!editMode} type="date" value={appliedDate ? dateConvert(appliedDate) : ""} onChange={e => setAppliedDate(e.target.value)} />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
@@ -75,7 +80,7 @@ export default function Visa() {
                         Visa received on:
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Control type="date" value={receivedDate ? dateConvert(receivedDate) : ""} onChange={e => setReceivedDate(e.target.value)} />
+                        <Form.Control disabled={!editMode} type="date" value={receivedDate ? dateConvert(receivedDate) : ""} onChange={e => setReceivedDate(e.target.value)} />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
@@ -86,6 +91,7 @@ export default function Visa() {
                         <ButtonGroup>
                             <ToggleButton
                                 key="Approved"
+                                disabled={!editMode}
                                 id="resultValue-Approved"
                                 type="radio"
                                 variant="outline-success"
@@ -98,6 +104,7 @@ export default function Visa() {
                             </ToggleButton>
                             <ToggleButton
                                 key="Rejected"
+                                disabled={!editMode}
                                 id="resultValue-Rejected"
                                 type="radio"
                                 variant="outline-danger"
@@ -117,6 +124,7 @@ export default function Visa() {
                         {VFS.map((val) => (
                             <Form.Check // prettier-ignore
                                 type="radio"
+                                disabled={!editMode}
                                 key={`${val.name}`}
                                 id={`${val}`}
                                 label={`VFS ${val.name}`}
@@ -132,12 +140,15 @@ export default function Visa() {
                 <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label column sm="2">Additional Information:</Form.Label>
                     <Col sm="10">
-                        <Form.Control as="textarea" rows={3} value={additionalInfo} onChange={e => setAdditionalInfo(e.target.value)} placeholder="Enter any additional deatils realted to your visa process..." />
+                        <Form.Control disabled={!editMode} as="textarea" rows={3} value={additionalInfo} onChange={e => setAdditionalInfo(e.target.value)} placeholder="Enter any additional deatils realted to your visa process..." />
                     </Col>
                 </Form.Group>
 
-                <Button variant="primary" onClick={saveVisa}>
+                <Button variant="primary" onClick={saveVisa} disabled={!editMode}>
                     Save
+                </Button>
+                <Button className='m-2' disabled={editMode} onClick={()=>setEditMode(true)}>
+                    Edit
                 </Button>
             </Form>
         </>
