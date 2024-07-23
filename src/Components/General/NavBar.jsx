@@ -31,7 +31,7 @@ export default function NavBar(props) {
   }
   return (
     <>
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar sticky="top" zIndex="998" bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand><Link to='/'><img src={"germanytimeline.png"} alt="GermanyTimeline" style={{ height: "50px" }} /></Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

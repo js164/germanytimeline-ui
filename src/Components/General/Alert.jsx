@@ -12,7 +12,7 @@ export default function AlertBar() {
             dispatch(desetAlertShow())
         }, 3000);
         return (
-            <Alert variant={AlertState.alertType}>
+            <Alert style={{position:"fixed", zIndex:"1021", width:"100%" }} variant={AlertState.alertType}>
                 {AlertState.title} {AlertState.text}
             </Alert>
         )
