@@ -31,15 +31,15 @@ export default function NavBar(props) {
   }
   return (
     <>
-      <Navbar sticky="top" zIndex="998" bg="dark" data-bs-theme="dark">
+      <Navbar sticky="top" bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand><Link to='/'><img src={"germanytimeline.png"} alt="GermanyTimeline" style={{ height: "50px" }} /></Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
-            <Link to='/university' className='mx-1'>University</Link>
-            <Link to='/course' className='mx-1'>Course</Link>
-            <Link to='/visa' className='mx-1'>Visa</Link>
-            <Link to='/aps' className='mx-1'>APS</Link>
+            <Link to='/university' className='mx-1' style={{color:"white",textDecoration:"none"}}>University</Link>
+            <Link to='/course' className='mx-1' style={{color:"white",textDecoration:"none"}}>Course</Link>
+            <Link to='/visa' className='mx-1' style={{color:"white",textDecoration:"none"}}>Visa</Link>
+            <Link to='/aps' className='mx-1' style={{color:"white",textDecoration:"none"}}>APS</Link>
             {AuthState ?
               <>
                 <Link to='/profile'  ><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="bi bi-person-circle m-1" viewBox="0 0 16 16">
@@ -47,11 +47,11 @@ export default function NavBar(props) {
                   <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                 </svg></Link>
 
-                <Link to='/' className='mx-1' onClick={logOut}>Log Out</Link>
+                <Link to='/' className='mx-1 px-1' onClick={logOut} style={{color:"#cf2424",textDecoration:"none", border: "#cf2424 solid 2px", borderRadius:"0.5rem"}}>Log Out</Link>
               </> :
               <>
-                <Link to='/login' className='mx-1'>LogIn</Link>
-                <Link to='/signup' className='mx-1'>SignUp</Link>
+                <Link to='/login' className='mx-1 px-1' style={{color:"#0dcaf0",textDecoration:"none", border: "#0dcaf0 solid 2px", borderRadius:"0.5rem"}}>LogIn</Link>
+                <Link to='/signup' className='mx-1 px-1' style={{color:"#0dcaf0",textDecoration:"none", border: "#0dcaf0 solid 2px", borderRadius:"0.5rem"}}>SignUp</Link>
               </>
             }
           </Navbar.Collapse>

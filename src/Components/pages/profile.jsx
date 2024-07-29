@@ -36,7 +36,7 @@ export default function Profile(props) {
     }, [])
 
     const getMyUniversityList = () => {
-        axios.get('/university/all').then(response => {
+        axios.get('/university/myuniversity/all').then(response => {
             if (response.data.success) {
                 setmyUniversityList(response.data.data)
                 console.log(response);
