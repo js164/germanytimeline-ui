@@ -33,7 +33,6 @@ export default function Visa() {
         <Row>
           {visaList.length > 0 &&
             visaList.map((v, idx) =>
-              <> 
                 <Card style={{ width: '25rem' }} className='m-2' key={idx}>
                   <Card.Body>
                     <Card.Title>
@@ -75,7 +74,6 @@ export default function Visa() {
         <ListGroup.Item>{v.additionalInfo ? v.additionalInfo : "No Comments!"}</ListGroup.Item>
       </ListGroup>
                 </Card>
-              </>
             )}
         </Row>
       </Container>
