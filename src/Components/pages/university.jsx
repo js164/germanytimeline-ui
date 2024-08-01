@@ -32,7 +32,7 @@ export default function University() {
   }, [])
 
   const getUniversityList = () => {
-    axios.get('/university/all').then(response => {
+    axios.get('/university/all/universityName').then(response => {
       console.log(response);
       if (response.data.success) {
         setUniversityList(response.data.data)
@@ -62,7 +62,7 @@ export default function University() {
                 <Card style={{ width: '25rem' }} className='m-2' key={idx}>
                   <Card.Body>
                     <Card.Title>{uni.universityName}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{uni.courseName}</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">{uni.courseName} ({uni.courseCategory})</Card.Subtitle>
                     <Card.Text>
 
                     </Card.Text>

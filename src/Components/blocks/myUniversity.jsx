@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import list from "../../assets/listofuniversity"
+import courselist from '../../assets/courselist';
 import { useDispatch } from 'react-redux';
 import { setAlertShow } from '../../ReduxStore/Action';
 
@@ -16,6 +17,7 @@ export default function MyUniversity(props) {
     const dispatch = useDispatch()
     const [selectedUniversity, setSelectedUniversity] = useState("")
     const [typedUniversity, setTypeddUniversity] = useState("")
+    const [courseCategory, setCourseCategory] = useState("")
     const [courseName, setCourseName] = useState("")
     const [applicationDate, setApplicationDate] = useState("")
     const [examDate, setExamDate] = useState("")
@@ -38,6 +40,7 @@ export default function MyUniversity(props) {
 
         let data = {
             universityName: selectedUniversity,
+            courseCategory: courseCategory,
             courseName: courseName,
             applicationDate: applicationDate,
             examDate: examDate,
@@ -66,6 +69,7 @@ export default function MyUniversity(props) {
     const clearData = () => {
         setSelectedUniversity("")
         setTypeddUniversity("")
+        setCourseCategory("")
         setCourseName("")
         setApplicationDate("")
         setExamDate("")
@@ -110,6 +114,17 @@ export default function MyUniversity(props) {
                             </Col>
                         </Form.Group>
                     }
+                    <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label column sm="2">Course Category:</Form.Label>
+                        <Col sm="10">
+                            <Form.Control as="select" onChange={e => setCourseCategory(e.target.value)} required aria-label="Default select example">
+                                <option>Choose Course</option>
+                                {courselist.map((uni, idx) => (
+                                    <option key={idx} value={uni}>{uni}</option>
+                                ))}
+                            </Form.Control>
+                        </Col>
+                    </Form.Group>
                     <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Form.Label column sm="2">
                             Course name:
@@ -191,7 +206,7 @@ export default function MyUniversity(props) {
                             </Col>
                         </Form.Group>
                     }
-                    {resultValue != "No Response" && <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                    {resultValue !== "No Response" && <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Form.Label column sm="2">
                             Acceptence/Rejection date:
                         </Form.Label>

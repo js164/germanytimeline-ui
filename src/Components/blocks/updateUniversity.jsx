@@ -14,6 +14,7 @@ import { setAlertShow } from '../../ReduxStore/Action';
 export default function UpdateUniversity(props) {
     const dispatch = useDispatch()
     const [universityName, setUniversityName] = useState("")
+    const [courseCategory, setCourseCategory] = useState("")
     const [courseName, setCourseName] = useState("")
     const [applicationDate, setApplicationDate] = useState("")
     const [examDate, setExamDate] = useState("")
@@ -36,6 +37,7 @@ export default function UpdateUniversity(props) {
 
         let data = {
             universityName : universityName,
+            courseCategory: courseCategory,
             courseName: courseName,
             applicationDate: applicationDate,
             examDate: examDate,
@@ -60,6 +62,7 @@ export default function UpdateUniversity(props) {
 
     const clearData = () => {
         setUniversityName("")
+        setCourseCategory("")
         setCourseName("")
         setApplicationDate("")
         setExamDate("")
@@ -80,6 +83,7 @@ export default function UpdateUniversity(props) {
     useEffect(()=>{
         if(props.uni){
             setUniversityName(props.uni.universityName)
+            setCourseCategory(props.uni.courseCategory)
             setCourseName(props.uni.courseName)
             setApplicationDate(props.uni.applicationDate)
             setExamDate(props.uni.examDate)
@@ -111,6 +115,12 @@ export default function UpdateUniversity(props) {
                                 <Form.Control type='text' value={universityName ? universityName : "" } disabled/>
                             </Col>
                         </Form.Group>
+                        <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label column sm="2">Course Category:</Form.Label>
+                        <Col sm="10">
+                            <Form.Control type='text' value={courseCategory ? courseCategory : "" } disabled/>
+                        </Col>
+                    </Form.Group>
                     <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Form.Label column sm="2">
                             Course name:
@@ -192,7 +202,7 @@ export default function UpdateUniversity(props) {
                             </Col>
                         </Form.Group>
                     }
-                    {resultValue != "No Response" && <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                    {resultValue !== "No Response" && <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Form.Label column sm="2">
                             Acceptence/Rejection date:
                         </Form.Label>

@@ -111,6 +111,10 @@ export default function Profile(props) {
                                             <Col> {uni.universityName} </Col>
                                         </Row>
                                         <Row>
+                                            <Col>Coruse Category:</Col>
+                                            <Col> {uni.courseCategory} </Col>
+                                        </Row>
+                                        <Row>
                                             <Col>Coruse:</Col>
                                             <Col> {uni.courseName} </Col>
                                         </Row>
