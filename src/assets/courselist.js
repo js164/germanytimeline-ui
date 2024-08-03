@@ -21,6 +21,7 @@ const courselist = [
     "Languages, Literature and Culture",
     "Law",
     "Mathematics Studies",
+    "Mechanical Engineering",
     "Medicine and Healthcare",
     "Military Science and Security v Philosophical Sciences",
     "Physics Studies",
