@@ -92,3 +92,8 @@ code {
 .marker-outline .timeline-item:hover .timeline-marker:before {
   background: #FF6B6B;
 }
+
+
+.courseToTimeline:hover{
+  transform: scale(1.25);
+}

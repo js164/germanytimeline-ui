@@ -7,10 +7,12 @@ import Moment from 'react-moment';
 import Pagination from 'react-bootstrap/Pagination';
 import list from "../../assets/listofuniversity"
 import Form from 'react-bootstrap/Form';
+import { useSearchParams } from 'react-router-dom';
 
 export default function University() {
   const [universityList, setUniversityList] = useState([])
   const [active, setActive] = useState("All");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   let letters = [];
   letters.push(
@@ -29,6 +31,19 @@ export default function University() {
 
   useEffect(() => {
     getUniversityList()
+    let u= searchParams.get("u")
+    console.log(u);
+    if(u==="TUM"){
+      setActive("Technical University of Munich")
+    }else if(u==="TUD"){
+      setActive("Darmstadt University of Technology")
+    }else if(u==="LMU"){
+      setActive("Ludwig Maximilian University of Munich")
+    }else if(u==="TUB"){
+      setActive("Technical University of Berlin")
+    }else if(u==="RWTH"){
+      setActive("RWTH Aachen")
+    }
   }, [])
 
   const getUniversityList = () => {
@@ -49,9 +64,9 @@ export default function University() {
         <Pagination>{letters}</Pagination>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Select style={{border:"#0d6efd solid 2px"}} as="select" onChange={e => setActive(e.target.value)}>
-            <option key={"default"}>Choose University</option>
+            <option key={"default"} >Choose University</option>
             {list.map((uni, idx) => (
-              <option key={idx} value={uni}>{uni}</option>
+              <option key={idx} value={uni} selected={active===uni}>{uni}</option>
             ))}
           </Form.Select>
         </Form.Group>

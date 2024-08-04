@@ -8,13 +8,24 @@ import Form from 'react-bootstrap/Form';
 import courselist from '../../assets/courselist';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Course() {
   const [courseList, setCourseList] = useState([])
   const [active, setActive] = useState("All");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     getCourseList()
+    let c= searchParams.get("c")
+    console.log(c);
+    if(c==="ME"){
+      setActive("Mechanical Engineering")
+    }else if(c==="CS"){
+      setActive("Computer Science")
+    }else if(c==="BM"){
+      setActive("Business & Management")
+    }
   }, [])
 
   const getCourseList = () => {
@@ -36,9 +47,9 @@ export default function Course() {
           <Form.Label column sm="3">Select Course Category:</Form.Label>
           <Col sm="9">
           <Form.Select style={{border:"#0d6efd solid 2px"}} as="select" onChange={e => setActive(e.target.value)}>
-            <option key={"default"} value="All">All</option>
+            <option key={"default"} value="All" selected={active==="All"}>All</option>
             {courselist.map((uni, idx) => (
-              <option key={idx} value={uni}>{uni}</option>
+              <option key={idx} value={uni} selected={active===uni}>{uni}</option>
             ))}
           </Form.Select>
           </Col>

@@ -57,64 +57,90 @@ export default function Dashboard() {
 
       <br /><br /><br />
       <div className="APSlist">
-        <h1 className='m-2' style={{ textAlign: "center" }}>APS</h1>
+        <h1 className='m-4' style={{ textAlign: "center", color: "#4070F4", textDecoration: "underline" }}>APS</h1>
         <div>
-        <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
-          <div>
-            <img src="/APS.jpg" alt="" srcset="" style={{ maxHeight: "500px" }} />
+          <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+            <div>
+              <img src="/APS.jpg" alt="" srcset="" style={{ maxHeight: "500px" }} />
+            </div>
+            <div>
+              <h3>Steps to apply APS Certificate</h3>
+              <ul>
+                <li>Step 1: Get information in advance</li>
+                <li>Step 2: Plan your application</li>
+                <li>Step 3: Assemble your documents</li>
+                <li>Step 4: Register yourself</li>
+                <li>Step 5: Pay online</li>
+                <li>Step 6: Send the documents and track the application</li>
+              </ul>
+              <h5>For more details: <Link target="_blank" to="https://aps-india.de/">https://aps-india.de/</Link></h5>
+              <br />
+              <Button variant="primary"><Link to='/aps' className='mx-1' style={{ color: "white", textDecoration: "none" }}>View APS Timeline</Link> </Button>
+            </div>
           </div>
-          <div>
-            <h3>Steps to apply APS Certificate</h3>
-            <ul>
-              <li>Step 1: Get information in advance</li>
-              <li>Step 2: Plan your application</li>
-              <li>Step 3: Assemble your documents</li>
-              <li>Step 4: Register yourself</li>
-              <li>Step 5: Pay online</li>
-              <li>Step 6: Send the documents and track the application</li>
-            </ul>
-            <h5>For more details: <Link target="_blank" to="https://aps-india.de/">https://aps-india.de/</Link></h5>
-            <br />
-            <Button variant="primary"><Link to='/aps' className='mx-1' style={{color:"white",textDecoration:"none"}}>View APS Timeline</Link> </Button>
-          </div>
-        </div>
         </div>
       </div>
 
       <br /><br /><br />
       <div className="Courselist">
-        <h1 className='m-2' style={{ textAlign: "center" }}>Courses</h1>
+        <h1 className='m-4' style={{ textAlign: "center", color: "#4070F4", textDecoration: "underline" }}>Courses</h1>
         <div>
-        <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
-        <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="/ME.png" />
-      <Card.Body>
-        <Card.Title>Mechanical Engineering</Card.Title>
-        <Button variant="primary">Mechanical </Button>
-      </Card.Body>
-    </Card>
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>Computer Science</Card.Title>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>Business & Management</Card.Title>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>All Courses</Card.Title>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
+          <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+            <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src="/ME.jpg" />
+              <Card.Body>
+                <Card.Title>Mechanical Engineering</Card.Title>
+                <Button variant="primary"><Link to='/course?c=ME' className='mx-1' style={{ color: "white", textDecoration: "none" }}> Show Timeline </Link></Button>
+              </Card.Body>
+            </Card>
+            <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src="/CS.jpg" />
+              <Card.Body>
+                <Card.Title>Computer Science</Card.Title>
+                <Button variant="primary"><Link to='/course?c=CS' className='mx-1' style={{ color: "white", textDecoration: "none" }}> Show Timeline </Link></Button>
+              </Card.Body>
+            </Card>
+            <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src="/BM.jpg" />
+              <Card.Body>
+                <Card.Title>Business & Management</Card.Title>
+                <Button variant="primary"><Link to='/course?c=BM' className='mx-1' style={{ color: "white", textDecoration: "none" }}> Show Timeline </Link></Button>
+              </Card.Body>
+            </Card>
+            <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src="/other.jpg" />
+              <Card.Body>
+                <Card.Title>All Courses</Card.Title>
+                <Button variant="primary"><Link to='/course' className='mx-1' style={{ color: "white", textDecoration: "none" }}> Show Timeline </Link></Button>
+              </Card.Body>
+            </Card>
+          </div>
         </div>
+      </div>
+
+      <br /><br /><br />
+      <div className="Courselist">
+        <h1 className='m-4' style={{ textAlign: "center", color: "#4070F4", textDecoration: "underline" }}>University</h1>
+        <div>
+          <Row style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }} className='mx-4'>
+            <Card className='courseToTimeline' style={{ width: '18rem', border:"none",transition: "transform .2s", cursor:"pointer" }}>
+            <Link to='/university?u=TUM' className='mx-1' style={{ color: "white", textDecoration: "none" }}><Card.Img variant="top" src="/TUM.jpg"/></Link>
+            </Card>
+            <Card className='courseToTimeline' style={{ width: '18rem', border:"none",transition: "transform .2s", cursor:"pointer" }}>
+              <Link to='/university?u=TUD' className='mx-1' style={{ color: "white", textDecoration: "none" }}><Card.Img variant="top" src="/TUD.jpg" /></Link>
+            </Card>
+            <Card className='courseToTimeline' style={{ width: '18rem', border:"none",transition: "transform .2s", cursor:"pointer" }}>
+            <Link to='/university?u=LMU' className='mx-1' style={{ color: "white", textDecoration: "none" }}><Card.Img variant="top" src="/LMU.jpg" /></Link>
+            </Card>
+          </Row>
+          <Row style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }} className='mx-4'>
+            <Card className='courseToTimeline' style={{ width: '18rem', border:"none",transition: "transform .2s", cursor:"pointer" }}>
+            <Link to='/university?u=TUB' className='mx-1' style={{ color: "white", textDecoration: "none" }}><Card.Img variant="top" src="/TUB.jpg" /></Link>
+            </Card>
+            <Card className='courseToTimeline' style={{ width: '18rem', border:"none",transition: "transform .2s", cursor:"pointer" }}>
+            <Link to='/university?u=RWTH' className='mx-1' style={{ color: "white", textDecoration: "none" }}><Card.Img variant="top" src="/RWTH.jpg" /></Link>
+            </Card>
+          </Row>
         </div>
       </div>
     </>
