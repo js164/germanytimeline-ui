@@ -17,17 +17,20 @@ export default function NavBar(props) {
   const logOut = () => {
     axios.get('/auth/logout').then((response) => {
       console.log(response);
+      clearAll()
     }).catch(err => {
       console.log(err);
+      clearAll()
     })
+  }
+
+  const clearAll = ()=>{
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
     localStorage.removeItem('username')
     localStorage.removeItem('userId')
     dispatch(desetAuth())
     navigate('/login', { replace: true })
-
-
   }
   return (
     <>
@@ -36,10 +39,10 @@ export default function NavBar(props) {
           <Navbar.Brand><Link to='/'><img src={"germanytimeline.png"} alt="GermanyTimeline" style={{ height: "50px" }} /></Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
-            <Link to='/university' className='mx-1' style={{color:"white",textDecoration:"none"}}>University</Link>
-            <Link to='/course' className='mx-1' style={{color:"white",textDecoration:"none"}}>Course</Link>
-            <Link to='/visa' className='mx-1' style={{color:"white",textDecoration:"none"}}>Visa</Link>
             <Link to='/aps' className='mx-1' style={{color:"white",textDecoration:"none"}}>APS</Link>
+            <Link to='/course' className='mx-1' style={{color:"white",textDecoration:"none"}}>Course</Link>
+            <Link to='/university' className='mx-1' style={{color:"white",textDecoration:"none"}}>University</Link>
+            <Link to='/visa' className='mx-1' style={{color:"white",textDecoration:"none"}}>Visa</Link>
             {AuthState ?
               <>
                 <Link to='/profile'  ><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="bi bi-person-circle m-1" viewBox="0 0 16 16">

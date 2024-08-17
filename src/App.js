@@ -79,7 +79,7 @@ export default function App() {
 
 axios.interceptors.request.use(function (config) {
   if(config.url.slice(0,4)!=='http'){
-    config.url = 'http://localhost:5500' + config.url
+    config.url = 'https://germanytimeline.onrender.com' + config.url
   }
   const token = localStorage.getItem('access_token');
   config.headers.Authorization = 'Bearer ' + token;

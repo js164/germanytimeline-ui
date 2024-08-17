@@ -61,7 +61,7 @@ export default function University() {
     <>
       <Container>
         <h1 className="text-info">Universities</h1>
-        <Pagination>{letters}</Pagination>
+        <Pagination style={{overflowX:"auto"}}>{letters}</Pagination>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Select style={{border:"#0d6efd solid 2px"}} as="select" onChange={e => setActive(e.target.value)}>
             <option key={"default"} >Choose University</option>
