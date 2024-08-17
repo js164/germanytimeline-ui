@@ -12,7 +12,7 @@ import { useSearchParams } from 'react-router-dom';
 export default function University() {
   const [universityList, setUniversityList] = useState([])
   const [active, setActive] = useState("All");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   let letters = [];
   letters.push(
@@ -44,6 +44,7 @@ export default function University() {
     }else if(u==="RWTH"){
       setActive("RWTH Aachen")
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getUniversityList = () => {
@@ -74,7 +75,7 @@ export default function University() {
           {universityList.length > 0 &&
             universityList.map((uni, idx) =>
               <> {((active.length > 1 && active !== "All" && uni.universityName === active) || (active.length === 1 && uni.universityName[0] === active) || active === "All") &&
-                <Card style={{ width: '25rem' }} className='m-2' key={idx}>
+                <Card style={{ width: '25rem', maxWidth: '95vw' }} className='m-2' key={idx}>
                   <Card.Body>
                     <Card.Title>{uni.universityName}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{uni.courseName} ({uni.courseCategory})</Card.Subtitle>

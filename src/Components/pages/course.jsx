@@ -13,7 +13,7 @@ import { useSearchParams } from 'react-router-dom';
 export default function Course() {
   const [courseList, setCourseList] = useState([])
   const [active, setActive] = useState("All");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     getCourseList()
@@ -26,6 +26,7 @@ export default function Course() {
     }else if(c==="BM"){
       setActive("Business & Management")
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getCourseList = () => {
@@ -58,7 +59,7 @@ export default function Course() {
           {courseList.length > 0 &&
             courseList.map((uni, idx) =>
               <> {((uni.courseCategory === active) || active === "All") &&
-                <Card style={{ width: '25rem' }} className='m-2' key={idx}>
+                <Card style={{ width: '25rem', maxWidth: '95vw' }} className='m-2' key={idx}>
                   <Badge style={{position:"absolute",right:"5px",top:"-5px"}} bg="info">{uni.courseCategory}</Badge>
                   <Card.Body>
                     <Card.Title>{uni.courseName} </Card.Title>

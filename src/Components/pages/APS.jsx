@@ -32,7 +32,7 @@ export default function APS() {
         <Row>
           {APSList.length > 0 &&
             APSList.map((v, idx) =>
-                <Card style={{ width: '25rem' }} className='m-2' key={idx}>
+                <Card style={{ width: '25rem', maxWidth: '95vw' }} className='m-2' key={idx}>
                   <Card.Body>
                     <Card.Title>
                       {moment(v.receivedDate).diff(v.appliedDate,'days')} days

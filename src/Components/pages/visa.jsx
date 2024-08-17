@@ -33,7 +33,7 @@ export default function Visa() {
         <Row>
           {visaList.length > 0 &&
             visaList.map((v, idx) =>
-                <Card style={{ width: '25rem' }} className='m-2' key={idx}>
+                <Card style={{ width: '25rem', maxWidth: '95vw' }} className='m-2' key={idx}>
                   <Card.Body>
                     <Card.Title>
                       VFS {v.VFSlocation} ({moment(v.receivedDate).diff(v.appliedDate,'days')} days) &nbsp;
