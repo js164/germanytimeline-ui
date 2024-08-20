@@ -6,19 +6,23 @@ import Row from 'react-bootstrap/esm/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Moment from 'react-moment';
 import moment from 'moment';
+import Loading from '../General/loading';
 
 export default function APS() {
   const [APSList, setAPSList] = useState([])
+  const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     getAPSList()
   }, [])
 
   const getAPSList = () => {
+    setLoading(true)
     axios.get('/APS/all').then(response => {
       console.log(response);
       if (response.data.success) {
         setAPSList(response.data.data)
+        setLoading(false)
       }
     }).catch(err => {
       console.log(err);
@@ -29,6 +33,7 @@ export default function APS() {
     <>
       <Container>
         <h1 className="text-info">APS</h1>
+        {loading && <Loading />}
         <Row>
           {APSList.length > 0 &&
             APSList.map((v, idx) =>

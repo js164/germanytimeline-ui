@@ -8,11 +8,13 @@ import Pagination from 'react-bootstrap/Pagination';
 import list from "../../assets/listofuniversity"
 import Form from 'react-bootstrap/Form';
 import { useSearchParams } from 'react-router-dom';
+import Loading from '../General/loading';
 
 export default function University() {
   const [universityList, setUniversityList] = useState([])
   const [active, setActive] = useState("All");
   const [searchParams] = useSearchParams();
+  const [loading,setLoading] = useState(true)
 
   let letters = [];
   letters.push(
@@ -48,10 +50,12 @@ export default function University() {
   }, [])
 
   const getUniversityList = () => {
+    setLoading(true)
     axios.get('/university/all/universityName').then(response => {
       console.log(response);
       if (response.data.success) {
         setUniversityList(response.data.data)
+        setLoading(false)
       }
     }).catch(err => {
       console.log(err);
@@ -71,6 +75,7 @@ export default function University() {
             ))}
           </Form.Select>
         </Form.Group>
+        {loading && <Loading />}
         <Row>
           {universityList.length > 0 &&
             universityList.map((uni, idx) =>

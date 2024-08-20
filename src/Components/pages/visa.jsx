@@ -7,19 +7,23 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
 import Moment from 'react-moment';
 import moment from 'moment';
+import Loading from '../General/loading';
 
 export default function Visa() {
   const [visaList, setVisaList] = useState([])
+  const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     getVisaList()
   }, [])
 
   const getVisaList = () => {
+    setLoading(true)
     axios.get('/visa/all').then(response => {
       console.log(response);
       if (response.data.success) {
         setVisaList(response.data.data)
+        setLoading(false)
       }
     }).catch(err => {
       console.log(err);
@@ -30,6 +34,7 @@ export default function Visa() {
     <>
       <Container>
         <h1 className="text-info">Visa</h1>
+        {loading && <Loading />}
         <Row>
           {visaList.length > 0 &&
             visaList.map((v, idx) =>

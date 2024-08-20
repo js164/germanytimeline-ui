@@ -9,11 +9,13 @@ import courselist from '../../assets/courselist';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import { useSearchParams } from 'react-router-dom';
+import Loading from '../General/loading';
 
 export default function Course() {
   const [courseList, setCourseList] = useState([])
   const [active, setActive] = useState("All");
   const [searchParams] = useSearchParams();
+  const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     getCourseList()
@@ -30,10 +32,12 @@ export default function Course() {
   }, [])
 
   const getCourseList = () => {
+    setLoading(true)
     axios.get('/university/all/courseName').then(response => {
       console.log(response);
       if (response.data.success && response.data.data) {
         setCourseList(response.data.data)
+        setLoading(false)
       }
     }).catch(err => {
       console.log(err);
@@ -55,6 +59,7 @@ export default function Course() {
           </Form.Select>
           </Col>
         </Form.Group>
+        {loading && <Loading />}
         <Row>
           {courseList.length > 0 &&
             courseList.map((uni, idx) =>

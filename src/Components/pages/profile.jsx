@@ -13,6 +13,7 @@ import UpdateUniversity from '../blocks/updateUniversity';
 import Modal from 'react-bootstrap/Modal';
 import APS from '../blocks/APS';
 import Visa from '../blocks/visa';
+import Loading from '../General/loading';
 
 export default function Profile(props) {
     const dispatch = useDispatch()
@@ -29,6 +30,7 @@ export default function Profile(props) {
     const [myUniversityList, setmyUniversityList] = useState([]);
     const [uni, setUni] = useState([])
     const [dltUni, setDltUni] = useState([])
+    const [loadingUni,setLoadingUni] = useState(true)
 
 
     useEffect(() => {
@@ -36,10 +38,12 @@ export default function Profile(props) {
     }, [])
 
     const getMyUniversityList = () => {
+        setLoadingUni(true)
         axios.get('/university/myuniversity/all').then(response => {
             if (response.data.success) {
                 setmyUniversityList(response.data.data)
                 console.log(response);
+                setLoadingUni(false)
             }
         }).catch(err => {
             console.log(err);
@@ -99,6 +103,7 @@ export default function Profile(props) {
                         </Button>
                         <MyUniversity universityShow={universityShow} universityClose={universityClose}></MyUniversity>
                         <UpdateUniversity uni={uni} updateUniversityShow={updateUniversityShow} updateUniversityClose={updateUniversityClose}></UpdateUniversity>
+                        {loadingUni && <Loading />}
                         <Accordion defaultActiveKey="0" >
                             {myUniversityList && myUniversityList.map((uni, idx) =>
                                 <Accordion.Item eventKey={idx} key={idx}>
