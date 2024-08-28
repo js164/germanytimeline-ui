@@ -14,6 +14,7 @@ import Modal from 'react-bootstrap/Modal';
 import APS from '../blocks/APS';
 import Visa from '../blocks/visa';
 import Loading from '../General/loading';
+import Contact from '../blocks/Contact';
 
 export default function Profile(props) {
     const dispatch = useDispatch()
@@ -30,7 +31,7 @@ export default function Profile(props) {
     const [myUniversityList, setmyUniversityList] = useState([]);
     const [uni, setUni] = useState([])
     const [dltUni, setDltUni] = useState([])
-    const [loadingUni,setLoadingUni] = useState(true)
+    const [loadingUni, setLoadingUni] = useState(true)
 
 
     useEffect(() => {
@@ -95,6 +96,10 @@ export default function Profile(props) {
                 <h1>Welcome {localStorage.username}</h1>
                 <hr />
                 <div className='Timeline'>
+                    <div className='contact'>
+                        <h1 className="text-info">Contect</h1>
+                        <Contact />
+                    </div>
                     <div className="universityList">
                         <h1 className="text-info">Universities</h1>
                         <h5 className="text-secondary">Add universities where you applied!</h5>
