@@ -15,6 +15,8 @@ export default function Signup(props) {
     const [otp, setOTP] = useState('')
     const [showOTP, setShowOTP] = useState(false)
     const [otpError, setOtpError] = useState('')
+    const [otpMessage, setOtpMessage] = useState('')
+    const [otpCountdown, setOTPCountdown] = useState('')
 
     
     const navigate = useNavigate();
@@ -41,6 +43,7 @@ export default function Signup(props) {
                 dispatch(setAlertShow('success','Congratulations!',response.data.message))
                 // navigate('/', { replace: true })
                 handleOTPShow()
+                resendOTPTimer()
             } else {
                 dispatch(setAlertShow('danger','Sorry!',response.data.message))
             }
@@ -82,7 +85,37 @@ export default function Signup(props) {
         })
     };
 
+    const resendOTP = (e) =>{
+        e.preventDefault();
+        const data = {
+            userId: localStorage.getItem('userId'),
+            email: localStorage.getItem('email'),
+        }
+        axios.post('/auth/resendotp', data).then((response) => {
+            if(response && response.data && response.data.success){
+                setOtpMessage(response.data.message)
+                setTimeout(()=>{
+                    setOtpMessage('')
+                },3000)
+                resendOTPTimer()
+            }
+        }).catch(err => {
+            dispatch(setAlertShow('danger','Sorry!',err.message))
+            console.log(err);
+        })
+    }
 
+    const resendOTPTimer = ()=>{
+        let n= 10
+                var interval=setInterval(()=>{
+                    n = n - 1
+                    setOTPCountdown(n)
+                    if(n === 0){
+                        clearInterval(interval);
+                        setOTPCountdown('')
+                    }
+                },1000)
+    }
 
     return (
         <>
@@ -118,8 +151,10 @@ export default function Signup(props) {
                     <Form.Control type="text" value={otp} onChange={(e) => setOTP(e.target.value)} placeholder="Enter OTP" />
             </Form.Group>
         <p style={{color:"red"}} className='mx-3'>{otpError}</p>    
+        <p style={{color:"green"}} className='mx-3'>{otpMessage}</p>   
         <Modal.Footer>
-          <Button variant="primary" onClick={verifyOTP}>
+        <Button disabled={otpCountdown} onClick={resendOTP}> Resend OTP {otpCountdown &&`in ${otpCountdown} sec`} </Button>
+          <Button variant="primary" onClick={verifyOTP} disabled={otp.length < 6}>
             Verify
           </Button>
         </Modal.Footer>
