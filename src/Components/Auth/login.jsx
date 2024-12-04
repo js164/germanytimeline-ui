@@ -16,12 +16,25 @@ export default function Login() {
     const [otpError, setOtpError] = useState('')
     const [otpMessage, setOtpMessage] = useState('')
     const [otpCountdown, setOTPCountdown] = useState('')
+    const [showForgot, setShowForgot] = useState(false)
+    const [forgotError, setForgotError] = useState('')
+    const [forgotMessage, setForgotMessage] = useState('')
+    const [showNewPassword, setShowNewPassword] = useState(false)
+    const [newPasswordError, setNewPasswordError] = useState('')
+    const [newPasswordMessage, setNewPasswordMessage] = useState('')
+    const [passwordReset, setPasswordReset] = useState(false)
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleOTPClose = () => setShowOTP(false);
     const handleOTPShow = () => setShowOTP(true);
+
+    const handleForgotClose = () => setShowForgot(false);
+    const handleForgotShow = () => setShowForgot(true);
+
+    const handleNewPasswordClose = () => setShowNewPassword(false);
+    const handleNewPasswordShow = () => setShowNewPassword(true);
 
     const LogIn = (e) => {
         e.preventDefault();
@@ -65,15 +78,21 @@ export default function Login() {
         axios.post('/auth/verifyotp', data).then((response) => {
             console.log(response);
             if (response && response.data && response.data.success) {
-                localStorage.setItem('email', response.data.user.email);
-                localStorage.setItem('username', response.data.user.username);
-                localStorage.setItem('access_token', response.data.user.access_token);
-                localStorage.setItem('refresh_token', response.data.user.refresh_token);
-                localStorage.setItem('userId', response.data.user.userId);
-                localStorage.setItem('isActive', response.data.user.isActive);
-                dispatch(setAuth())
-                dispatch(setAlertShow('success', 'Congratulations!', response.data.message))
-                navigate('/', { replace: true })
+                if(passwordReset){
+                    localStorage.setItem('email', response.data.user.email);
+                    handleNewPasswordShow();
+                    handleOTPClose();
+                }else{
+                    localStorage.setItem('email', response.data.user.email);
+                    localStorage.setItem('username', response.data.user.username);
+                    localStorage.setItem('access_token', response.data.user.access_token);
+                    localStorage.setItem('refresh_token', response.data.user.refresh_token);
+                    localStorage.setItem('userId', response.data.user.userId);
+                    localStorage.setItem('isActive', response.data.user.isActive);
+                    dispatch(setAuth())
+                    dispatch(setAlertShow('success', 'Congratulations!', response.data.message))
+                    navigate('/', { replace: true })
+                }
             } else {
                 setOtpError(response.data.message)
                 setOTP('')
@@ -100,6 +119,55 @@ export default function Login() {
                     setOtpMessage('')
                 },3000)
                 resendOTPTimer()
+            }
+        }).catch(err => {
+            dispatch(setAlertShow('danger','Sorry!',err.message))
+            console.log(err);
+        })
+    }
+
+    const forgotPassword = (e) =>{
+        e.preventDefault();
+        setPasswordReset(true)
+
+        axios.post('/auth/resendotp', {email:email}).then((response) => {
+            if(response && response.data && response.data.success){
+                localStorage.setItem('email', response.data.user.email);
+                localStorage.setItem('userId', response.data.user.userId);
+                handleOTPShow()
+                resendOTPTimer()
+                handleForgotClose()
+            }else{
+                setForgotError(response.data.message)
+                setTimeout(() => {
+                    setForgotError('')
+                }, 3000)
+            }
+        }).catch(err => {
+            dispatch(setAlertShow('danger','Sorry!',err.message))
+            console.log(err);
+        })
+    }
+
+    const newPassword = (e) =>{
+        e.preventDefault();
+
+        axios.post('/auth/newPassword', {email:email,password:password}).then((response) => {
+            if(response && response.data && response.data.success){
+                localStorage.setItem('email', response.data.user.email);
+                localStorage.setItem('username', response.data.user.username);
+                localStorage.setItem('access_token', response.data.user.access_token);
+                localStorage.setItem('refresh_token', response.data.user.refresh_token);
+                localStorage.setItem('userId', response.data.user.userId);
+                localStorage.setItem('isActive', response.data.user.isActive);
+                dispatch(setAuth())
+                dispatch(setAlertShow('success', 'Congratulations!', response.data.message))
+                navigate('/', { replace: true })
+            }else{
+                setForgotError(response.data.message)
+                setTimeout(() => {
+                    setForgotError('')
+                }, 3000)
             }
         }).catch(err => {
             dispatch(setAlertShow('danger','Sorry!',err.message))
@@ -138,9 +206,27 @@ export default function Login() {
                     <Button variant="primary" type="submit">
                         Log In
                     </Button>
+                    <Button variant='secondary' onClick={handleForgotShow} className='m-2'>Forgot password?</Button>
                     <Link to="/signup" className='m-2'>Create new account?</Link>
                 </Form>
             </div>
+
+            <Modal show={showForgot} onHide={handleForgotClose} className='m-2'>
+                <Modal.Header closeButton>
+                    <Modal.Title>Forgot Password</Modal.Title>
+                </Modal.Header>
+                <Form.Group className="m-3" controlId="formBasicEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email" />
+                </Form.Group>
+                <p style={{ color: "red" }} className='mx-3'>{forgotError}</p>
+                <Modal.Footer>
+                    <Button variant="success" onClick={forgotPassword} disabled={email.length <= 0}>
+                        Send OTP
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             <Modal show={showOTP} onHide={handleOTPClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Verify Your Email</Modal.Title>
@@ -153,8 +239,24 @@ export default function Login() {
                 <p style={{ color: "green" }} className='mx-3'>{otpMessage}</p>
                 <Modal.Footer>
                     <Button disabled={otpCountdown} onClick={resendOTP}> Resend OTP {otpCountdown && `in ${otpCountdown} sec`} </Button>
-                    <Button variant="primary" onClick={verifyOTP} disabled={otp.length < 6}>
+                    <Button variant="success" onClick={verifyOTP} disabled={otp.length < 6}>
                         Verify
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showNewPassword} onHide={handleNewPasswordClose} className='m-2'>
+                <Modal.Header closeButton>
+                    <Modal.Title>New Password</Modal.Title>
+                </Modal.Header>
+                <Form.Group className="mb-3 p-3" controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                </Form.Group>
+                <p style={{ color: "red" }} className='mx-3'>{newPasswordError}</p>
+                <Modal.Footer>
+                    <Button variant="success" onClick={newPassword} disabled={password.length <= 1}>
+                        Set New Password
                     </Button>
                 </Modal.Footer>
             </Modal>
